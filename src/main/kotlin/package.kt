@@ -1,0 +1,1 @@
+package ru.shvets.reminder.bot.meetup

@@ -25,11 +25,12 @@ fun Route.remindRoute(reminderService: ReminderService) {
             call.respond(list)
         }
 
-        post {
+        post("") {
             val request = call.receive<ReminderRequest>()
             println(request)
             val reminder: Reminder = request.toReminder()
             reminderService.create(reminder)
+            call.respond("Item added")
         }
     }
 }

@@ -8,9 +8,9 @@ Content-Type: application/json
 
 {
   "chatId": 985768562,
-  "description": "сварить кашу",
-  "hours": 0,
-  "minutes": 1
+  "description": "проверить почту на linkedin",
+  "hours": 1,
+  "minutes": 0
 }
 
 ###

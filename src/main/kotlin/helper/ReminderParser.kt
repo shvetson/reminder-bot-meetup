@@ -1,6 +1,6 @@
 package ru.shvets.reminder.bot.meetup.helper
 
-import ru.shvets.reminder.bot.meetup.module.Reminder
+import ru.shvets.reminder.bot.meetup.model.Reminder
 
 /**
  * @author  Oleg Shvets

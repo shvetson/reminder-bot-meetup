@@ -1,4 +1,4 @@
-package ru.shvets.reminder.bot.meetup.module
+package ru.shvets.reminder.bot.meetup.model
 
 import kotlinx.serialization.Serializable
 import kotlin.jvm.JvmInline

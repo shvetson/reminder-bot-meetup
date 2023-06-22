@@ -5,9 +5,10 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.util.*
-import ru.shvets.reminder.bot.meetup.module.Reminder
-import ru.shvets.reminder.bot.meetup.module.ReminderId
-import ru.shvets.reminder.bot.meetup.module.ReminderRequest
+import ru.shvets.reminder.bot.meetup.model.Reminder
+import ru.shvets.reminder.bot.meetup.model.ReminderId
+import ru.shvets.reminder.bot.meetup.model.ReminderRequest
+import ru.shvets.reminder.bot.meetup.model.ReminderResponse
 import ru.shvets.reminder.bot.meetup.service.ReminderService
 
 /**
@@ -21,7 +22,7 @@ fun Route.remindRoute(reminderService: ReminderService) {
     route("/reminder") {
         get("/{chatId}") {
             val chatId = call.parameters.getOrFail<Long>("chatId").toLong()
-            val list: List<Reminder> = reminderService.getRemindersForChat(chatId)
+            val list: List<ReminderResponse> = reminderService.getRemindersForChat(chatId).map(Reminder::toResponse)
             call.respond(list)
         }
 

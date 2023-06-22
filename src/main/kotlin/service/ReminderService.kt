@@ -10,8 +10,8 @@ import ru.shvets.reminder.bot.meetup.entity.ReminderTable
 import ru.shvets.reminder.bot.meetup.entity.ReminderTable.fromRow
 import ru.shvets.reminder.bot.meetup.helper.NONE
 import ru.shvets.reminder.bot.meetup.logger.Logger
-import ru.shvets.reminder.bot.meetup.module.Reminder
-import ru.shvets.reminder.bot.meetup.module.ReminderId
+import ru.shvets.reminder.bot.meetup.model.Reminder
+import ru.shvets.reminder.bot.meetup.model.ReminderId
 import ru.shvets.reminder.bot.meetup.repo.ReminderRepository
 
 /**
@@ -72,7 +72,7 @@ class ReminderService(
                 ReminderTable.chatId eq chatId
             }
         }
-        result.map(::fromRow)
+        result.orderBy(ReminderTable.timeToReminder).map(::fromRow)
     }
 
     override suspend fun findByChatIdAndDescriptionAndMinutesAndHours(
@@ -86,7 +86,7 @@ class ReminderService(
             result.andWhere { ReminderTable.chatId eq chatId }
             result.andWhere { ReminderTable.description like "%${description}%" }
         }
-        result.map(::fromRow).firstOrNull()
+        result.orderBy(ReminderTable.timeToReminder).map(::fromRow).firstOrNull()
     }
 
     suspend fun getRemindersForChat(chatId: Long): List<Reminder> {

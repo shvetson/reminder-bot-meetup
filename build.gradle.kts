@@ -63,6 +63,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:$datetime_version")
 
     implementation("org.telegram:telegrambots:6.1.0")
+    implementation("io.kotest:kotest-runner-junit5-jvm:4.6.0")
 
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")

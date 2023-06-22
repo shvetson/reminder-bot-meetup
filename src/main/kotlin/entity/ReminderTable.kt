@@ -7,8 +7,8 @@ import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.javatime.datetime
 import org.jetbrains.exposed.sql.statements.UpdateBuilder
 import ru.shvets.reminder.bot.meetup.helper.NONE
-import ru.shvets.reminder.bot.meetup.module.Reminder
-import ru.shvets.reminder.bot.meetup.module.ReminderId
+import ru.shvets.reminder.bot.meetup.model.Reminder
+import ru.shvets.reminder.bot.meetup.model.ReminderId
 import java.time.LocalDateTime
 
 /**

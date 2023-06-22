@@ -1,8 +1,12 @@
-package ru.shvets.reminder.bot.meetup.module
+package ru.shvets.reminder.bot.meetup.model
 
 import kotlinx.datetime.Instant
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toJavaLocalDateTime
+import kotlinx.datetime.toLocalDateTime
 import kotlinx.serialization.Serializable
 import ru.shvets.reminder.bot.meetup.helper.NONE
+import java.time.format.DateTimeFormatter
 
 /**
  * @author  Oleg Shvets
@@ -23,4 +27,14 @@ data class Reminder(
     override fun toString(): String {
         return description
     }
+
+    fun toResponse() = ReminderResponse(
+        id = this.id,
+        description = this.description,
+        timeToReminder = this.timeToReminder
+            .toLocalDateTime(TimeZone.currentSystemDefault())
+            .toJavaLocalDateTime()
+            .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
+        processed = this.processed,
+    )
 }

@@ -1,8 +1,8 @@
 package ru.shvets.reminder.bot.meetup.repo
 
 import kotlinx.datetime.Instant
-import ru.shvets.reminder.bot.meetup.module.Reminder
-import ru.shvets.reminder.bot.meetup.module.ReminderId
+import ru.shvets.reminder.bot.meetup.model.Reminder
+import ru.shvets.reminder.bot.meetup.model.ReminderId
 
 /**
  * @author  Oleg Shvets

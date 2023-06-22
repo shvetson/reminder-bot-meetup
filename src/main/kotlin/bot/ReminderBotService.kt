@@ -9,7 +9,7 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession
 import ru.shvets.reminder.bot.meetup.config.TelegramConfig
 import ru.shvets.reminder.bot.meetup.helper.parserMessageToReminder
 import ru.shvets.reminder.bot.meetup.logger.Logger
-import ru.shvets.reminder.bot.meetup.module.ReminderId
+import ru.shvets.reminder.bot.meetup.model.ReminderId
 import ru.shvets.reminder.bot.meetup.service.ReminderService
 
 /**
@@ -48,7 +48,7 @@ class ReminderBotService(
 
     private fun getAll(chatId: Long) {
         val messageTest = runBlocking { reminderService.getRemindersForChat(chatId) }
-            .joinToString(prefix = "List:\n", separator = "\n") { it.toString() }
+            .joinToString(prefix = "List:\n-> ", separator = "\n-> ") { it.toString() }
 
         if (messageTest.isNotEmpty()) {
             sendMessage(messageTest, chatId)

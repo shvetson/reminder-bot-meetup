@@ -9,6 +9,11 @@ Content-Type: application/json
 {
   "chatId": 985768562,
   "description": "сварить кашу",
-  "hours": 8,
-  "minutes": 30
+  "hours": 0,
+  "minutes": 1
 }
+
+###
+
+DELETE http://localhost:8080/api/v1/reminder/8461a095-d63d-4478-b418-47db925ac10b
+Content-Type: application/json

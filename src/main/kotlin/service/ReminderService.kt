@@ -6,15 +6,12 @@ import kotlinx.datetime.*
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
-import org.jetbrains.exposed.sql.transactions.transaction
-import org.jvnet.hk2.annotations.Service
 import ru.shvets.reminder.bot.meetup.entity.ReminderTable
 import ru.shvets.reminder.bot.meetup.entity.ReminderTable.fromRow
 import ru.shvets.reminder.bot.meetup.helper.NONE
 import ru.shvets.reminder.bot.meetup.logger.Logger
 import ru.shvets.reminder.bot.meetup.module.Reminder
 import ru.shvets.reminder.bot.meetup.module.ReminderId
-import ru.shvets.reminder.bot.meetup.plugins.UserService
 import ru.shvets.reminder.bot.meetup.repo.ReminderRepository
 
 /**

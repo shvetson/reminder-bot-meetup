@@ -20,17 +20,24 @@ fun Route.remindRoute(reminderService: ReminderService) {
 
     route("/reminder") {
         get("/{chatId}") {
-            val id = call.parameters.getOrFail<Long>("chatId").toLong()
-            val list: List<Reminder> = reminderService.getRemindersForChat(id)
+            val chatId = call.parameters.getOrFail<Long>("chatId").toLong()
+            val list: List<Reminder> = reminderService.getRemindersForChat(chatId)
             call.respond(list)
         }
 
-        post("") {
+        post {
             val request = call.receive<ReminderRequest>()
             println(request)
             val reminder: Reminder = request.toReminder()
             reminderService.create(reminder)
             call.respond("Item added")
+        }
+
+        delete("/{id}"){
+            val id = call.parameters.getOrFail<String>("id")
+            val reminderId = ReminderId(id)
+            val result = reminderService.delete(reminderId)
+            call.respond(result)
         }
     }
 }

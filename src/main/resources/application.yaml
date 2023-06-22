@@ -26,6 +26,6 @@ jwt:
 #  secret: "kAyhoCaF2Ba2tDv1tauqwSGN04ibSsED"
 telegram:
   botName: "FortunerHelperBot"
-  token: "5106613552:AAFyvO-4gpLqjONW4nM8KrEl_wyTq4rB0rY"
+  token: ""
 scheduler:
   minutes: 5

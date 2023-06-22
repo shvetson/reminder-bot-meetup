@@ -5,9 +5,9 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.util.*
-import ru.shvets.reminder.bot.meetup.config.AppSettings
-import ru.shvets.reminder.bot.meetup.module.*
-import ru.shvets.reminder.bot.meetup.repo.ReminderRepository
+import ru.shvets.reminder.bot.meetup.module.Reminder
+import ru.shvets.reminder.bot.meetup.module.ReminderId
+import ru.shvets.reminder.bot.meetup.module.ReminderRequest
 import ru.shvets.reminder.bot.meetup.service.ReminderService
 
 /**

@@ -12,8 +12,6 @@ fun main(args: Array<String>): Unit =
 
 @Suppress("unused")
 fun Application.module(appSettings: AppSettings = initAppSettings()) {
-    configureSecurity()
-    configureHTTP()
     configureMonitoring()
     configureSerialization()
     DatabaseFactory.init(appSettings)

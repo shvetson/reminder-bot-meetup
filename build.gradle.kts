@@ -8,6 +8,8 @@ val datetime_version: String by project
 val kmpUUID_version: String by project
 val commons_codec_version: String by project
 val hikari_version: String by project
+val emoji_version: String by project
+val telegram_version: String by project
 
 plugins {
     kotlin("jvm")
@@ -62,7 +64,9 @@ dependencies {
 
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:$datetime_version")
 
-    implementation("org.telegram:telegrambots:6.1.0")
+    implementation("com.vdurmont:emoji-java:$emoji_version")
+
+    implementation("org.telegram:telegrambots:$telegram_version")
     implementation("io.kotest:kotest-runner-junit5-jvm:4.6.0")
 
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")

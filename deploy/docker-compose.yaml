@@ -1,27 +1,29 @@
 version: "3.7"
 services:
   bot:
+    image: bot:latest
+    container_name: bot
     build: .
     restart: always
     ports:
       - "8080:8080"
-    depends_on:
-      - postgresql
+#    depends_on:
+#      - postgresql
     environment:
       BOT_TOKEN: "5106613552:AAFyvO-4gpLqjONW4nM8KrEl_wyTq4rB0rY"
       BOT_NAME: "FortunerHelperBot"
       PSQL_USER: "postgres"
       PSQL_PASSWORD: "postgres"
 
-  postgresql:
-    container_name: postgres-server
-    image: postgres
-    environment:
-      POSTGRES_DB: "postgres"
-      POSTGRES_USER: "postgres"
-      POSTGRES_PASSWORD: "postgres"
-      PGDATA: "/var/lib/postgresql/data/pgdata"
-    volumes:
-      - /var/lib/postgresql/data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
+#  postgresql:
+#    container_name: psql
+#    image: postgres
+#    environment:
+#      POSTGRES_DB: "postgres"
+#      POSTGRES_USER: "postgres"
+#      POSTGRES_PASSWORD: "postgres"
+#      PGDATA: "/var/lib/postgresql/data/pgdata"
+#    volumes:
+#      - /var/lib/postgresql/data:/var/lib/postgresql/data
+#    ports:
+#      - "5432:5432"

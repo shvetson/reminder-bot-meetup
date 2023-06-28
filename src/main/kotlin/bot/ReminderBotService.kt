@@ -61,18 +61,22 @@ class ReminderBotService(
                     sendMessage(SORRY_TEXT, chatId)
                 }
 
+                // вынести в отдельную функцию
+                DELETE_CMD -> {
+                    if (update.message.isReply) {
+                        val replyText = update.message.replyToMessage.text
+
+                        if (deleteReminder(chatId, replyText)) {
+                            val text = EmojiParser.parseToUnicode("Напоминание удалено! :+1:") // или :+1:
+                            sendMessage(text, chatId)
+                            log.info("Напоминание удалено")
+                        }
+                    }
+                }
+
                 else -> {
                     saveReminder(chatId, it)
 //                    sendMessage(SORRY_TEXT, chatId)
-                }
-            }
-
-            if (update.message.isReply && it.lowercase() == "delete") {
-                val replyText = update.message.replyToMessage.text
-
-                if (deleteReminder(chatId, replyText)) {
-                    sendMessage("Напоминание удалено", chatId)
-                    log.info("Напоминание удалено")
                 }
             }
         }
@@ -123,6 +127,6 @@ class ReminderBotService(
 
     fun start() {
         TelegramBotsApi(DefaultBotSession::class.java).registerBot(this)
-        log.info("Бос стартанул")
+        log.info("Бот стартанул")
     }
 }

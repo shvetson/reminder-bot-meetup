@@ -90,7 +90,7 @@ class ReminderBotService(
                     .toLocalDateTime(TimeZone.currentSystemDefault())
                     .toJavaLocalDateTime()
                     .format(DateTimeFormatter.ofPattern("HH:mm"))
-                "$time - $text"
+                "$time $text"
             }
 
         if (messageTest.isNotEmpty()) {
@@ -119,7 +119,7 @@ class ReminderBotService(
         val listOfCommands: MutableList<BotCommand> = mutableListOf()
         listOfCommands.add(BotCommand("/start", "приветствие"))
         listOfCommands.add(BotCommand("/all", "вывод всех напоминаний"))
-        listOfCommands.add(BotCommand("/help", "инфо о применении данного бота"))
+        listOfCommands.add(BotCommand("/help", "инфо о применении бота"))
         listOfCommands.add(BotCommand("/settings", "настройки бота"))
         execute(SetMyCommands(listOfCommands, BotCommandScopeDefault(), null))
         log.info("Основное меню сконфигурировано")

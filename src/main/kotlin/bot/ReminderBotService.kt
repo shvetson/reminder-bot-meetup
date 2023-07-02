@@ -7,6 +7,7 @@ import kotlinx.datetime.toJavaLocalDateTime
 import kotlinx.datetime.toLocalDateTime
 import org.telegram.telegrambots.bots.TelegramLongPollingBot
 import org.telegram.telegrambots.meta.TelegramBotsApi
+import org.telegram.telegrambots.meta.api.methods.ParseMode
 import org.telegram.telegrambots.meta.api.methods.commands.SetMyCommands
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 import org.telegram.telegrambots.meta.api.objects.Update
@@ -16,6 +17,7 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession
 import ru.shvets.reminder.bot.meetup.config.TelegramConfig
 import ru.shvets.reminder.bot.meetup.helper.*
 import ru.shvets.reminder.bot.meetup.logger.Logger
+import ru.shvets.reminder.bot.meetup.model.Command
 import ru.shvets.reminder.bot.meetup.model.ReminderId
 import ru.shvets.reminder.bot.meetup.service.ReminderService
 import java.time.format.DateTimeFormatter
@@ -44,25 +46,26 @@ class ReminderBotService(
             val chatId = update.message.chat.id
 
             when (update.message.text.lowercase()) {
-                START_CMD -> {
+
+                Command.START.command -> {
                     val text = EmojiParser.parseToUnicode("Привет, ${update.message.chat.firstName}! :blush:")
                     sendMessage(text, chatId)
                 }
 
-                HELP_CMD -> {
-                    sendMessage(HELP_TEXT, chatId)
+                Command.INFO.command -> {
+                    sendMessage(INFO_TEXT, chatId)
                 }
 
-                ALL_CMD -> {
+                Command.ALL.command -> {
                     getAll(chatId)
                 }
 
-                SET_CMD -> {
+                Command.SETTINGS.command -> {
                     sendMessage(SORRY_TEXT, chatId)
                 }
 
                 // вынести в отдельную функцию
-                DELETE_CMD -> {
+                Command.DELETE.command -> {
                     if (update.message.isReply) {
                         val replyText = update.message.replyToMessage.text
 
@@ -112,14 +115,17 @@ class ReminderBotService(
     }
 
     fun sendMessage(message: String, chatId: Long) {
-        execute(SendMessage(chatId.toString(), message))
+        val sendMessage = SendMessage(chatId.toString(), message)
+        sendMessage.enableHtml(true);
+        sendMessage.parseMode = ParseMode.HTML;
+        execute(sendMessage)
     }
 
     private fun configureMenu() {
         val listOfCommands: MutableList<BotCommand> = mutableListOf()
         listOfCommands.add(BotCommand("/start", "приветствие"))
         listOfCommands.add(BotCommand("/all", "вывод всех напоминаний"))
-        listOfCommands.add(BotCommand("/help", "инфо о применении бота"))
+        listOfCommands.add(BotCommand("/info", "инфо о применении бота"))
         listOfCommands.add(BotCommand("/settings", "настройки бота"))
         execute(SetMyCommands(listOfCommands, BotCommandScopeDefault(), null))
         log.info("Основное меню сконфигурировано")

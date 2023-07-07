@@ -50,6 +50,7 @@ class ReminderBotService(
                 Command.START.command -> {
                     val text = EmojiParser.parseToUnicode("Привет, ${update.message.chat.firstName}! :blush:")
                     sendMessage(text, chatId)
+                    sendMessage(INFO_TEXT, chatId)
                 }
 
                 Command.INFO.command -> {

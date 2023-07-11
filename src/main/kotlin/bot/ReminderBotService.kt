@@ -43,14 +43,13 @@ class ReminderBotService(
     override fun onUpdateReceived(update: Update?) {
 
         update?.message?.text?.let {
+            val cmd = update.message.text.lowercase()
             val chatId = update.message.chat.id
 
-            when (update.message.text.lowercase()) {
-
+            when (cmd) {
                 Command.START.command -> {
-                    val text = EmojiParser.parseToUnicode("Привет, ${update.message.chat.firstName}! :blush:")
+                    val text = EmojiParser.parseToUnicode("$HELLO_TEXT, ${update.message.chat.firstName}! :blush:\n$SHORT_INFO_TEXT")
                     sendMessage(text, chatId)
-                    sendMessage(INFO_TEXT, chatId)
                 }
 
                 Command.INFO.command -> {
@@ -71,9 +70,9 @@ class ReminderBotService(
                         val replyText = update.message.replyToMessage.text
 
                         if (deleteReminder(chatId, replyText)) {
-                            val text = EmojiParser.parseToUnicode("Напоминание удалено! :+1:") // или :+1:
+                            val text = EmojiParser.parseToUnicode("$REMINDER_DELETED_TEXT :+1: ") // или :+1:
                             sendMessage(text, chatId)
-                            log.info("Напоминание удалено")
+                            log.info("Reminder deleted")
                         }
                     }
                 }
@@ -88,7 +87,7 @@ class ReminderBotService(
 
     private fun getAll(chatId: Long) {
         val messageTest = runBlocking { reminderService.getRemindersForChat(chatId) }
-            .joinToString(prefix = "Список:\n-> ", separator = "\n-> ") {
+            .joinToString(prefix = "$LIST_TEXT:\n-> ", separator = "\n-> ") {
                 val text = it.description
                 val time = it.timeToReminder
                     .toLocalDateTime(TimeZone.currentSystemDefault())
@@ -118,22 +117,22 @@ class ReminderBotService(
     fun sendMessage(message: String, chatId: Long) {
         val sendMessage = SendMessage(chatId.toString(), message)
         sendMessage.enableHtml(true);
-        sendMessage.parseMode = ParseMode.HTML;
+        sendMessage.parseMode = ParseMode.MARKDOWN;
         execute(sendMessage)
     }
 
     private fun configureMenu() {
         val listOfCommands: MutableList<BotCommand> = mutableListOf()
-        listOfCommands.add(BotCommand("/start", "приветствие"))
-        listOfCommands.add(BotCommand("/all", "вывод всех напоминаний"))
-        listOfCommands.add(BotCommand("/info", "инфо о применении бота"))
-        listOfCommands.add(BotCommand("/settings", "настройки бота"))
+        listOfCommands.add(BotCommand(Command.START.command, START_LABEL))
+        listOfCommands.add(BotCommand(Command.ALL.command, ALL_LABEL))
+        listOfCommands.add(BotCommand(Command.INFO.command, INFO_LABEL))
+        listOfCommands.add(BotCommand(Command.SETTINGS.command, SETTINGS_LABEL))
         execute(SetMyCommands(listOfCommands, BotCommandScopeDefault(), null))
-        log.info("Основное меню сконфигурировано")
+        log.info("Menu configured")
     }
 
     fun start() {
         TelegramBotsApi(DefaultBotSession::class.java).registerBot(this)
-        log.info("Бот стартанул")
+        log.info("Bot started")
     }
 }
